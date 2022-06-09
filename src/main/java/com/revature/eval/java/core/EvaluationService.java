@@ -1,5 +1,7 @@
 package com.revature.eval.java.core;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,19 @@ public class EvaluationService {
 
 		public static long toMilesPerHour(double kilometersPerHour) {
 			// TODO Write an implementation for this method declaration
-			return 0;
+
+			// check if the params is less than 0, if so return -1
+
+			if (kilometersPerHour < 0) {
+				return -1;
+			}
+
+			long mph = Math.round(kilometersPerHour / 1.609);
+
+			// find out the formula to convert kph to mph
+
+			// return it!
+			return mph;
 		}
 
 		/**
@@ -42,7 +56,15 @@ public class EvaluationService {
 		 */
 		public static String printConversion(double kilometersPerHour) {
 			// TODO Write an implementation for this method declaration
-			return null;
+
+			if (kilometersPerHour < 0) {
+				return "Invalid Value";
+			} else {
+				long milesPerHour = Math.round(kilometersPerHour / 1.609);
+
+				return Math.round(kilometersPerHour) + "km/h = " + milesPerHour + "mi/h";
+			}
+
 		}
 	}
 
@@ -68,7 +90,12 @@ public class EvaluationService {
 	 */
 	public String printMegaBytesAndKiloBytes(int XX) {
 		// TODO Write an implementation for this method declaration
-		return null;
+
+		int megaBytes = XX / 1024;
+		int kiloBytes = XX % 1024;
+
+		return XX + " KB = " + megaBytes + " MB and " + kiloBytes + " KB";
+
 	}
 
 	/**
@@ -92,7 +119,15 @@ public class EvaluationService {
 	 */
 	public boolean shouldWakeUp(boolean isBarking, int hourOfDay) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		if (hourOfDay < 0 || hourOfDay > 23) {
+			return false;
+		}
+
+		if (isBarking && (hourOfDay < 8 || hourOfDay > 22)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -108,7 +143,27 @@ public class EvaluationService {
 	 */
 	public boolean areEqualByThreeDecimalPlaces(double firstNum, double secondNum) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		if (firstNum < 0 && secondNum < 0) {
+			firstNum = Math.ceil(firstNum * 1000) / 1000;
+			secondNum = Math.ceil(secondNum * 1000) / 1000;
+		} else if (firstNum < 0 && secondNum >= 0) {
+			return false;
+
+		} else if (firstNum >= 0 && secondNum < 0) {
+			return false;
+		}
+
+		else {
+			firstNum = Math.floor(firstNum * 1000) / 1000;
+			secondNum = Math.floor(secondNum * 1000) / 1000;
+		}
+
+		if (firstNum == secondNum) {
+			return true;
+
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -125,7 +180,12 @@ public class EvaluationService {
 
 		public static boolean hasTeen(int x, int y, int z) {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (isTeen(x) || isTeen(y) || isTeen(z)) {
+				return true;
+
+			} else {
+				return false;
+			}
 		}
 
 		// We can initialize isTeen method first
@@ -133,7 +193,11 @@ public class EvaluationService {
 
 		public static boolean isTeen(int number) {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (number >= 13 && number <= 19) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -438,7 +502,7 @@ public class EvaluationService {
 	}
 
 	/**
-	 * 20. Sum of Multiples 
+	 * 20. Sum of Multiples
 	 * 
 	 * Given a number, find the sum of all the unique multiples of particular
 	 * numbers up to but not including that number.
@@ -451,31 +515,32 @@ public class EvaluationService {
 	public int getSumOfMultiples(int i, int[] set) {
 		return 0;
 	}
-	
+
 	/**
 	 * 21. Three Magic Numbers
 	 * 
-	 * You work at a casino in Las Vegas.  Your job is to program a slot machine to
+	 * You work at a casino in Las Vegas. Your job is to program a slot machine to
 	 * return 3 random numbers using the java.util.Random class.
 	 * 
 	 * Write a method to return an int array of 3 random numbers between 1 - 100.
-	 * Generate the 3 random numbers (1 - 100 inclusive) using the java.util.Random class.
+	 * Generate the 3 random numbers (1 - 100 inclusive) using the java.util.Random
+	 * class.
 	 */
-	
+
 	public int[] threeLuckyNumbers() {
 		return null;
 	}
-	
+
 	/*
 	 * 22. Easy Guessing Game
 	 * 
-	 * Create a program to generate a number between the given range:
-	 * int x = minimum
-	 * iny y = maximum (inclusive)
+	 * Create a program to generate a number between the given range: int x =
+	 * minimum iny y = maximum (inclusive)
 	 * 
-	 * You must use the Math.random class to generate a random number between x and y.
+	 * You must use the Math.random class to generate a random number between x and
+	 * y.
 	 */
-	
+
 	public int guessingGame(int x, int y) {
 		return 0;
 	}
