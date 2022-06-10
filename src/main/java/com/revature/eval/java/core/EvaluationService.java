@@ -1,9 +1,9 @@
 package com.revature.eval.java.core;
 
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class EvaluationService {
 
@@ -218,7 +218,15 @@ public class EvaluationService {
 	 */
 	public String printYearsAndDays(long minutes) {
 		// TODO Write an implementation for this method declaration
-		return null;
+
+		if (minutes < 0) {
+			return "Invalid Value";
+		} else {
+			long years = minutes / 525600;
+			long days = (minutes - (years * 525600)) / 1440;
+
+			return minutes + " min = " + years + " y and " + days + " d";
+		}
 	}
 
 	/**
@@ -232,7 +240,30 @@ public class EvaluationService {
 	 */
 	public String printNumberInWord(int number) {
 		// TODO Write an implementation for this method declaration
-		return null;
+
+		if (number == 0) {
+			return "ZERO";
+		} else if (number == 1) {
+			return "ONE";
+		} else if (number == 2) {
+			return "TWO";
+		} else if (number == 3) {
+			return "THREE";
+		} else if (number == 4) {
+			return "FOUR";
+		} else if (number == 5) {
+			return "FIVE";
+		} else if (number == 6) {
+			return "SIX";
+		} else if (number == 7) {
+			return "SEVEN";
+		} else if (number == 8) {
+			return "EIGHT";
+		} else if (number == 9) {
+			return "NINE";
+		} else {
+			return "OTHER";
+		}
 	}
 
 	/**
@@ -256,7 +287,23 @@ public class EvaluationService {
 	 */
 	public int getGreatestCommonDivisor(int first, int second) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		if (first < 10 || second < 10) {
+			return -1;
+		} else if (first < second) {
+			for (int i = first; i > 0; i--) {
+				if ((first % i) == 0 && (second % i) == 0) {
+					return i;
+				}
+			}
+
+		} else if (second < first) {
+			for (int i = second; i > 0; i--) {
+				if ((first % i) == 0 && (second % i) == 0) {
+					return i;
+				}
+			}
+		}
+		return first;
 	}
 
 	/**
@@ -274,7 +321,11 @@ public class EvaluationService {
 	 */
 	public int sumFirstAndLastDigit(int num) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		if (num < 0) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 
 	/**
@@ -353,17 +404,32 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo && sideOne == sideThree) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo && sideOne == sideThree) {
+				return false;
+
+			} else if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 
 	}
@@ -513,6 +579,7 @@ public class EvaluationService {
 	 * The sum of these multiples is 78.
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
+		
 		return 0;
 	}
 
@@ -542,6 +609,10 @@ public class EvaluationService {
 	 */
 
 	public int guessingGame(int x, int y) {
-		return 0;
+
+		int range = (y - x) + 1;
+		int randomNum = (int) (Math.random() * range);
+
+		return randomNum;
 	}
 }
