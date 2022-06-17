@@ -324,7 +324,11 @@ public class EvaluationService {
 		if (num < 0) {
 			return -1;
 		} else {
-			return 0;
+			int lastDigit = num % 10;
+			int totalDigits = (int)(Math.log10(num));
+			int firstDigit = (int)(num / Math.pow(10, totalDigits));
+			int sum = firstDigit + lastDigit;
+			return sum;
 		}
 	}
 
@@ -336,7 +340,18 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		if (string == null) {
+			return string;
+		} else {
+
+			String reversedString = "";
+
+			for (int i = string.length() - 1; i >= 0; i--) {
+				reversedString = reversedString + string.charAt(i);
+			}
+			return reversedString;
+		}
+
 	}
 
 	/**
@@ -347,8 +362,10 @@ public class EvaluationService {
 	 * long name like Portable Network Graphics to its acronym (PNG).
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
+		
 		return null;
+		
+	
 	}
 
 	/**
@@ -579,7 +596,7 @@ public class EvaluationService {
 	 * The sum of these multiples is 78.
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		
+
 		return 0;
 	}
 
@@ -595,7 +612,19 @@ public class EvaluationService {
 	 */
 
 	public int[] threeLuckyNumbers() {
-		return null;
+
+		int min = 1;
+		int max = 100;
+		Random randomNums = new Random();
+
+		int[] arr = new int[3];
+
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = min + randomNums.nextInt(max);
+			
+		}
+		
+		return arr;
 	}
 
 	/*
