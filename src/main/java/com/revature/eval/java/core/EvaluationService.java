@@ -1,9 +1,11 @@
 package com.revature.eval.java.core;
 
 import java.math.RoundingMode;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class EvaluationService {
 
@@ -325,8 +327,8 @@ public class EvaluationService {
 			return -1;
 		} else {
 			int lastDigit = num % 10;
-			int totalDigits = (int)(Math.log10(num));
-			int firstDigit = (int)(num / Math.pow(10, totalDigits));
+			int totalDigits = (int) (Math.log10(num));
+			int firstDigit = (int) (num / Math.pow(10, totalDigits));
 			int sum = firstDigit + lastDigit;
 			return sum;
 		}
@@ -362,10 +364,23 @@ public class EvaluationService {
 	 * long name like Portable Network Graphics to its acronym (PNG).
 	 */
 	public String acronym(String phrase) {
-		
-		return null;
-		
-	
+
+		String acronym = "";
+		String newPhrase = phrase.replaceAll("-", " ");
+
+		acronym += newPhrase.charAt(0);
+
+		for (int i = 0; i < newPhrase.length(); i++) {
+			if (Character.isWhitespace(newPhrase.charAt(i))) {
+				acronym = acronym + newPhrase.charAt(i);
+				acronym += newPhrase.charAt(i + 1);
+
+			}
+
+		}
+
+		return acronym.replaceAll("\\s+", "").toUpperCase();
+
 	}
 
 	/**
@@ -466,8 +481,47 @@ public class EvaluationService {
 	 * 3 + 2*1 + 2*3 + 2 + 1 = 3 + 2 + 6 + 3 = 5 + 9 = 14
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+
+		string = string.toUpperCase();
+		int score = 0;
+
+		for (int i = 0; i < string.length(); i++) {
+			if (string.charAt(i) == 'A' || string.charAt(i) == 'E' || string.charAt(i) == 'I' || string.charAt(i) == 'O'
+					|| string.charAt(i) == 'U' || string.charAt(i) == 'L' || string.charAt(i) == 'N'
+					|| string.charAt(i) == 'R' || string.charAt(i) == 'S' || string.charAt(i) == 'T') {
+
+				score = score + 1;
+
+			} else if (string.charAt(i) == 'D' || string.charAt(i) == 'G') {
+
+				score = score + 2;
+
+			} else if (string.charAt(i) == 'B' || string.charAt(i) == 'C' || string.charAt(i) == 'M'
+					|| string.charAt(i) == 'P') {
+
+				score = score + 3;
+
+			} else if (string.charAt(i) == 'F' || string.charAt(i) == 'H' || string.charAt(i) == 'V'
+					|| string.charAt(i) == 'W' || string.charAt(i) == 'Y') {
+
+				score = score + 4;
+
+			} else if (string.charAt(i) == 'K') {
+
+				score = score + 5;
+
+			} else if (string.charAt(i) == 'X') {
+
+				score = score + 8;
+
+			} else if (string.charAt(i) == 'Q' || string.charAt(i) == 'Z') {
+
+				score = score + 10;
+
+			}
+		}
+
+		return score;
 	}
 
 	/**
@@ -504,7 +558,28 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		return null;
+		string = string.replace(" 1 ", "");
+		string = string.replace("(", "");
+		string = string.replace(")", "");
+		string = string.replace(" +1 ", "");
+		string = string.replace("-", "");
+		string = string.replace(".", "");
+		string = string.replace(" ", "");
+
+		for (int i = 0; i < string.length(); i++) {
+
+			if (string.charAt(i) != '0' && string.charAt(i) != '1' && string.charAt(i) != '2' && string.charAt(i) != '3'
+					&& string.charAt(i) != '4' && string.charAt(i) != '5' && string.charAt(i) != '6'
+					&& string.charAt(i) != '7' && string.charAt(i) != '8' && string.charAt(i) != '9') {
+
+				throw new IllegalArgumentException("Phone number has a non-numeric character");
+
+			} else if (string.length() > 11) {
+				throw new IllegalArgumentException("Phone number has too many digits");
+			}
+
+		}
+		return string;
 	}
 
 	/**
@@ -535,6 +610,25 @@ public class EvaluationService {
 	 * a number is an Armstrong number.
 	 */
 	public boolean isArmstrongNumber(int input) {
+		
+		int originalNumber = input;
+		int remainder = 0;
+		int result =0;
+		int numOfDigits = 0;
+		
+		while(input != 0) {
+			input = input / 10;
+		 ++numOfDigits;
+		}
+		
+		while(originalNumber !=0) {
+			remainder = originalNumber % 10;
+			result += Math.pow(remainder, numOfDigits);
+			originalNumber = originalNumber/10;
+		}
+		if(result == input) {
+			return true;
+		}
 		return false;
 	}
 
@@ -548,6 +642,23 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
+		
+		
+		
+//		if(l % 2 ==0) return 2;
+//		if(l % 3 ==0) return 3;
+//		int num = 4;
+//		int sqrtNum = (int) Math.sqrt(l) +1;
+//		
+//		for(int i =5; i < sqrtNum; num = 6- num, i+= num ) {
+//			if(l % i == 0) {
+//				return i;
+//			}
+//		}
+//		
+//		
+//		return 1;
+		
 		return null;
 	}
 
@@ -563,8 +674,28 @@ public class EvaluationService {
 	 * numbers, pretend they don't exist and implement them yourself.
 	 */
 	public int calculateNthPrime(int k) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		if(k<1) {
+			throw new IllegalArgumentException("k needs to be greater than 1");
+		}
+		
+		long possiblePrime =2;
+		for(int i = 0; i < k; possiblePrime ++) {
+			boolean isPrime = true;
+			for(long j = 2; j * j <= possiblePrime; j++) {
+			
+				if(possiblePrime % j ==0) {
+					isPrime = false; 
+				}
+				
+			}
+			
+			if(isPrime) {
+				i++;
+			}
+		}
+				
+
+		return (int) (possiblePrime -1);
 	}
 
 	/**
@@ -581,7 +712,17 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		
+		string = string.toLowerCase();
+		
+		for(char ch = 'a'; ch <= 'z'; ch++) {
+			if(!string.contains(String.valueOf(ch))) {
+			return false;	
+			}
+			
+		}
+		
+		return true;
 	}
 
 	/**
@@ -596,8 +737,20 @@ public class EvaluationService {
 	 * The sum of these multiples is 78.
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-
-		return 0;
+		
+		int sum = 0;
+		HashSet<Integer> setOfMultiples = new HashSet();
+		for (int k : set) {
+		    for(int j = k; j < i; j+=k ) {
+		        if(j % k == 0) {
+		           setOfMultiples.add(j);
+		        }
+		    }
+		}
+		for(int k : setOfMultiples) {
+		    sum += k;
+		}
+		return sum;
 	}
 
 	/**
@@ -621,9 +774,9 @@ public class EvaluationService {
 
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = min + randomNums.nextInt(max);
-			
+
 		}
-		
+
 		return arr;
 	}
 
