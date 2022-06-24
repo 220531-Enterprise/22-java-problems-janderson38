@@ -1,6 +1,9 @@
 package com.revature.eval.java.core;
 
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -62,9 +65,9 @@ public class EvaluationService {
 			if (kilometersPerHour < 0) {
 				return "Invalid Value";
 			} else {
-				long milesPerHour = Math.round(kilometersPerHour / 1.609);
+				long milesPerHour = Math.round(kilometersPerHour * 0.621371);
 
-				return Math.round(kilometersPerHour) + "km/h = " + milesPerHour + "mi/h";
+				return kilometersPerHour + " km/h = " + milesPerHour + " mi/h";
 			}
 
 		}
@@ -92,7 +95,11 @@ public class EvaluationService {
 	 */
 	public String printMegaBytesAndKiloBytes(int XX) {
 		// TODO Write an implementation for this method declaration
-
+		
+		if(XX < 0) {
+			return "Invalid Value";
+		}
+		
 		int megaBytes = XX / 1024;
 		int kiloBytes = XX % 1024;
 
@@ -591,8 +598,17 @@ public class EvaluationService {
 	 * free: 1
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		String[] splitString = string.split("[ ,.!;:?-]");
+		for (String s : splitString) {
+			s = s.trim();
+			if (map.containsKey(s)) {
+				map.put(s, map.get(s) + 1);
+			} else {
+				map.put(s, 1);
+			}
+		}
+		return map;
 	}
 
 	/**
@@ -610,26 +626,23 @@ public class EvaluationService {
 	 * a number is an Armstrong number.
 	 */
 	public boolean isArmstrongNumber(int input) {
-		
-		int originalNumber = input;
-		int remainder = 0;
-		int result =0;
-		int numOfDigits = 0;
-		
-		while(input != 0) {
-			input = input / 10;
-		 ++numOfDigits;
+		int[] digits = new int[10];
+		int tempInput = input;
+		int i = 9;
+		do {
+			digits[i] = input % 10;
+			input /= 10;
+			i--;
+		} while (input != 0);
+
+		int[] newDigits = Arrays.copyOfRange(digits, i + 1, 10);
+
+		double sum = 0.0;
+		for (int newDigit : newDigits) {
+			sum += Math.pow(newDigit, newDigits.length);
+
 		}
-		
-		while(originalNumber !=0) {
-			remainder = originalNumber % 10;
-			result += Math.pow(remainder, numOfDigits);
-			originalNumber = originalNumber/10;
-		}
-		if(result == input) {
-			return true;
-		}
-		return false;
+		return tempInput == sum;
 	}
 
 	/**
@@ -641,25 +654,14 @@ public class EvaluationService {
 	 * Note that 1 is not a prime number.
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		
-		
-		
-//		if(l % 2 ==0) return 2;
-//		if(l % 3 ==0) return 3;
-//		int num = 4;
-//		int sqrtNum = (int) Math.sqrt(l) +1;
-//		
-//		for(int i =5; i < sqrtNum; num = 6- num, i+= num ) {
-//			if(l % i == 0) {
-//				return i;
-//			}
-//		}
-//		
-//		
-//		return 1;
-		
-		return null;
+		List<Long> factorList = new ArrayList<Long>();
+		for (long i = 2; i <= l; i++) {
+			while (l % i == 0) {
+				factorList.add(i);
+				l /= i;
+			}
+		}
+		return factorList;
 	}
 
 	/**
@@ -674,28 +676,27 @@ public class EvaluationService {
 	 * numbers, pretend they don't exist and implement them yourself.
 	 */
 	public int calculateNthPrime(int k) {
-		if(k<1) {
+		if (k < 1) {
 			throw new IllegalArgumentException("k needs to be greater than 1");
 		}
-		
-		long possiblePrime =2;
-		for(int i = 0; i < k; possiblePrime ++) {
+
+		long possiblePrime = 2;
+		for (int i = 0; i < k; possiblePrime++) {
 			boolean isPrime = true;
-			for(long j = 2; j * j <= possiblePrime; j++) {
-			
-				if(possiblePrime % j ==0) {
-					isPrime = false; 
+			for (long j = 2; j * j <= possiblePrime; j++) {
+
+				if (possiblePrime % j == 0) {
+					isPrime = false;
 				}
-				
+
 			}
-			
-			if(isPrime) {
+
+			if (isPrime) {
 				i++;
 			}
 		}
-				
 
-		return (int) (possiblePrime -1);
+		return (int) (possiblePrime - 1);
 	}
 
 	/**
@@ -712,16 +713,16 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		
+
 		string = string.toLowerCase();
-		
-		for(char ch = 'a'; ch <= 'z'; ch++) {
-			if(!string.contains(String.valueOf(ch))) {
-			return false;	
+
+		for (char ch = 'a'; ch <= 'z'; ch++) {
+			if (!string.contains(String.valueOf(ch))) {
+				return false;
 			}
-			
+
 		}
-		
+
 		return true;
 	}
 
@@ -737,18 +738,18 @@ public class EvaluationService {
 	 * The sum of these multiples is 78.
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		
+
 		int sum = 0;
 		HashSet<Integer> setOfMultiples = new HashSet();
 		for (int k : set) {
-		    for(int j = k; j < i; j+=k ) {
-		        if(j % k == 0) {
-		           setOfMultiples.add(j);
-		        }
-		    }
+			for (int j = k; j < i; j += k) {
+				if (j % k == 0) {
+					setOfMultiples.add(j);
+				}
+			}
 		}
-		for(int k : setOfMultiples) {
-		    sum += k;
+		for (int k : setOfMultiples) {
+			sum += k;
 		}
 		return sum;
 	}
